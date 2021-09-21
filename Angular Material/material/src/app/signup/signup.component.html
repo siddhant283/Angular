@@ -1,0 +1,200 @@
+<div class="container">
+  
+   <div class="reg-header">
+    <h1>Registration!</h1>
+   </div>
+
+<div class="stepper-container">
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+   
+        <mat-step [stepControl]="personalForm" label="Personal Details">
+            
+          <form [formGroup]="personalForm">
+    
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Firstname</mat-label>
+                <input matInput placeholder="" 
+                formControlName="firstname" 
+                type="text" 
+                class="form-control" 
+                id="firstname"
+                aria-describedby="firstname"
+                [errorStateMatcher]="matcher">
+                <mat-icon matSuffix>assignment_ind</mat-icon>
+                <mat-error *ngIf="personalForm.get('firstname').hasError('required')">
+                  Firstname is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="personalForm.get('firstname').hasError('minlength')">
+                  Firstname must be at least <strong>4 characters long.</strong> 
+                </mat-error>
+                <mat-error *ngIf="personalForm.get('firstname').hasError('pattern')">
+                  Firstname can only contain <strong>Alphabets and Spaces.</strong> 
+                </mat-error>
+              </mat-form-field>
+    
+    
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Lastname</mat-label>
+                <input matInput placeholder="" 
+                formControlName="lastname" 
+                type="text" 
+                class="form-control" 
+                id="lastname"
+                aria-describedby="lastname"
+                [errorStateMatcher]="matcher">
+                <mat-icon matSuffix>assignment_ind</mat-icon>
+                <mat-error *ngIf="personalForm.get('firstname').hasError('required')">
+                  Lasstname is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="personalForm.get('lastname').hasError('minlength')">
+                  Lastname must be at least <strong>4 characters long.</strong> 
+                </mat-error>
+                <mat-error *ngIf="personalForm.get('lastname').hasError('pattern')">
+                  Lastname can only contain <strong>Alphabets and Spaces.</strong> 
+                </mat-error>
+              </mat-form-field> <br> <br>
+    
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Age</mat-label>
+                <input matInput placeholder="" 
+                formControlName="age" 
+                type="text" 
+                class="form-control" 
+                id="age"
+                aria-describedby="age"
+                [errorStateMatcher]="matcher">
+                <mat-icon matSuffix>assignment_ind</mat-icon>
+                <mat-error *ngIf="personalForm.get('age').hasError('required')">
+                  Age is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="personalForm.get('age').hasError('pattern')">
+                  Age is should be a <strong>number.</strong>
+                </mat-error>
+              </mat-form-field> <br><br>
+    
+              <mat-radio-group  formControlName="gender" class="radio-top" aria-label="Select Gender">
+                <mat-label class="radio"><strong>Gender:</strong></mat-label> 
+                <mat-radio-button color="primary"  value="Male" class="radio">Male</mat-radio-button>
+                <mat-radio-button color="primary" value="Female" class="radio">Female</mat-radio-button>
+              </mat-radio-group> <br><br>
+              <mat-error *ngIf="personalForm.get('gender').hasError('required')">Please choose your gender</mat-error><br>
+
+
+              <mat-form-field  class="example-chip-list">
+                <mat-label><strong>Subjects Opted</strong></mat-label>
+                <mat-chip-list #chipList aria-label="Subject selection" formControlName="subject">
+                  <mat-chip *ngFor="let subject of personalForm.get('subject').value" [selectable]="selectable"
+                           [removable]="removable" (removed)="remove(subject)">
+                    {{subject.name}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                  <input placeholder="New Subject..."
+                         [matChipInputFor]="chipList"
+                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                         [matChipInputAddOnBlur]="addOnBlur"
+                         (matChipInputTokenEnd)="add($event)"
+                         >
+                </mat-chip-list>
+                <mat-error *ngIf="personalForm.get('subject').hasError('required')">Atleast One Subject is required.</mat-error>
+              </mat-form-field> <br><br>
+              
+              <button mat-raised-button  matStepperNext>Next</button>
+          </form>
+    
+      
+        </mat-step>
+    
+        <mat-step [stepControl]="contactForm" label="Contact Details">
+    
+            <form [formGroup]="contactForm">
+    
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="" 
+                    formControlName="email" 
+                    type="email" 
+                    class="form-control" 
+                    id="email"
+                    aria-describedby="email"
+                    [errorStateMatcher]="matcher">
+                    <mat-icon matSuffix>assignment_ind</mat-icon>
+                    <mat-error *ngIf="contactForm.get('email').invalid">
+                        {{getEmailErrorMessage()}}
+                    </mat-error>
+                  </mat-form-field> <br>
+    
+                  <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Phone</mat-label>
+                    <input matInput placeholder="" 
+                    formControlName="phone" 
+                    type="text" 
+                    class="form-control" 
+                    id="phone"
+                    aria-describedby="phone"
+                    [errorStateMatcher]="matcher">
+                    <mat-icon matSuffix>assignment_ind</mat-icon>
+                    <mat-error *ngIf="contactForm.get('phone').invalid">
+                        {{getPhoneErrorMessage()}}
+                    </mat-error>
+                  </mat-form-field> <br><br>
+        
+                  <button mat-raised-button matStepperPrevious class="step-btn">Back</button>
+                  <button mat-raised-button  matStepperNext class="step-btn">Next</button>
+              </form>
+        
+             
+          
+        </mat-step>
+    
+        <mat-step [stepControl]="loginForm" label="Login Details">
+          
+           <form [formGroup]="loginForm">
+    
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="" 
+                formControlName="username" 
+                type="text" 
+                class="form-control" 
+                id="username"
+                aria-describedby="username"
+                [errorStateMatcher]="matcher">
+                <mat-icon matSuffix>assignment_ind</mat-icon>
+                <mat-error *ngIf="loginForm.get('username').hasError('required')">
+                    Username is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="loginForm.get('username').hasError('pattern')">
+                  UserName can only contain AlphaNumeric Characters and Special Characters (*,_,@,.)
+                </mat-error>
+              </mat-form-field> <br>
+    
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label> Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'"
+                placeholder="" 
+                formControlName="password" 
+                class="form-control" 
+                id="password"
+                aria-describedby="password"
+                [errorStateMatcher]="matcher">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                    Password is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="loginForm.get('password').hasError('pattern')">
+                  Password can only contain AlphaNumeric Characters and Special Characters (*,_,@,.)
+                </mat-error>
+              </mat-form-field> <br><br>
+    
+               
+              <button mat-raised-button matStepperPrevious class="step-btn">Back</button>
+              <button mat-raised-button  mat-stroked-button (click)="openSnackBar('Registration Successful','RESET')"  type="submit" class="step-btn">Submit</button>
+           </form>
+          
+        </mat-step>
+    
+      </mat-horizontal-stepper>
+</div>
+</div>

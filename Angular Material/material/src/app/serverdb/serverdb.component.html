@@ -1,0 +1,345 @@
+
+<div class="container">
+   
+
+    <div>
+       <form class="example-form"  [formGroup]="fetchForm" (ngSubmit)="fetchForm.valid && onSubmit()" #f="ngForm">
+           <p>
+               <mat-form-field appearance="outline" class="form-field">
+                   <mat-label>URL</mat-label>
+                   <input matInput placeholder="" 
+                   formControlName="URL" 
+                   type="text" 
+                   class="form-control" 
+                   id="URL"
+                   aria-describedby="Enter URL"
+                   [errorStateMatcher]="matcher">
+                   <mat-icon matSuffix>play_for_work</mat-icon>
+                   <mat-error *ngIf="fetchForm.get('URL').hasError('required')">
+                       URL is <strong>required</strong>.
+                   </mat-error>
+                   <mat-error *ngIf="fetchForm.get('URL').hasError('pattern')">
+                       Please Enter a <strong>Valid URL.</strong>
+                   </mat-error>
+                 </mat-form-field>
+                 <span class="fetch-button">
+                   <button type="submit" mat-raised-button color="primary" >Fetch Data</button>
+                 </span>
+           </p>      
+           
+         </form>
+    </div>
+    
+    
+    <div class="mat-elevation-z8 table">
+       <table mat-table [dataSource]="dataSource" matSort class="content-table">
+   
+           <!--- Note that these columns can be defined in any order.
+                 The actual rendered columns are set as a property on the row definition" -->
+         
+          <ng-container matColumnDef="id">
+             <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+             <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+           </ng-container>
+
+           <ng-container matColumnDef="name">
+             <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+           </ng-container>
+         
+         
+           <ng-container matColumnDef="email">
+             <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+             <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+           </ng-container>
+         
+          
+           <ng-container matColumnDef="phone">
+             <th mat-header-cell *matHeaderCellDef  mat-sort-header> Phone </th>
+             <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+           </ng-container>
+         
+         
+           <ng-container matColumnDef="username" >
+             <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+             <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+           </ng-container>
+       
+            
+            <ng-container matColumnDef="company" >
+               <th mat-header-cell *matHeaderCellDef mat-sort-header> Company </th>
+               <td mat-cell *matCellDef="let element"> {{element.company.name}} </td>
+             </ng-container>
+
+             <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    <button class="delete-btn" mat-raised-button color="warn" type="button" (click)="deleteUser(i)"  [disabled]="deleteDisabled(i)">
+                        Delete 
+                    </button>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="update">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    <button class="btn" mat-raised-button color="primary" type="button" (click)="updateUser(i)">
+                        Update
+                    </button>
+                </td>
+              </ng-container>
+         
+           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+         </table>
+         <mat-paginator [length]="100" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>  
+    </div>
+    <div>
+        <div class="form-container">
+    <form [formGroup]="userForm" (ngSubmit)="userForm.valid" #f="ngForm">
+
+        <div *ngIf="updateFlag">
+           
+  
+                <form formGroupName="update">
+                    <div>
+                        <label class="col-sm-6" attr.for="{{'userName'}}"><b>Update User</b></label>
+                        <table class="example-full-width">
+                            <tr>
+                                <td>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Id</mat-label>
+                                        <input matInput placeholder=" {{'id'}}" 
+                                        formControlName="id" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'id'}}"
+                                        [(ngModel)]="updateUserData.id" 
+                                        aria-describedby="Enter User Id"
+                                        >
+                                      </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" class="form-field">
+                                        <mat-label>UserName</mat-label>
+                                        <input matInput placeholder=" {{'Username'}}" 
+                                        formControlName="username" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'username'}}"
+                                        [(ngModel)]="updateUserData.username" 
+                                        aria-describedby="Enter User Name"
+                                        >
+                                      </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field appearance="outline" class="form-field">
+                                        <mat-label>Name</mat-label>
+                                        <input matInput placeholder=" {{'Name'}}" 
+                                        formControlName="name" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'name'}}"
+                                        [(ngModel)]="updateUserData.name" 
+                                        aria-describedby="Enter User Name"
+                                        >
+                                      </mat-form-field> 
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" class="form-field">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput placeholder=" {{'Email'}}" 
+                                        formControlName="email" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'email'}}"
+                                        [(ngModel)]="updateUserData.email" 
+                                        aria-describedby="Enter User Email"
+                                        >
+                                      </mat-form-field>  
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field appearance="outline" class="form-field">
+                                        <mat-label>Phone</mat-label>
+                                        <input matInput placeholder=" {{'Phone'}}" 
+                                        formControlName="phone" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'phone'}}"
+                                        [(ngModel)]="updateUserData.phone" 
+                                        aria-describedby="Enter User Phone Number"
+                                        >
+                                      </mat-form-field> 
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" class="form-field">
+                                        <mat-label>Company</mat-label>
+                                        <input matInput placeholder=" {{'Company'}}" 
+                                        formControlName="company" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'company'}}"
+                                        [(ngModel)]="updateUserData.company" 
+                                        aria-describedby="Enter User Email"
+                                        >
+                                      </mat-form-field> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" mat-raised-button color="primary" (click)="updateChanges()" [disabled]="userForm.get('update').invalid"> 
+                                        Update User
+                                    </button>
+                                </td>
+                            </tr>    
+                            <tr>
+                                <td>
+                                    <mat-error *ngIf="f.submitted && userForm.get('update').invalid">
+                                        <span class="text-danger">
+                                            Please Enter Complete Details.
+                                        </span>
+                                    </mat-error> 
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>          
+        </div>  
+           
+        <label class="col-sm-6" attr.for="{{'userName'}}"><b>Add User</b></label>        
+        <div *ngIf="checkLength()>0">
+            <div formArrayName="users" *ngFor="let user of userForm.get('users')['controls']; 
+            let i = index">
+  
+                <form [formGroupName]=i>
+                    <div>
+                        <table class="example-full-width">
+                            <tr>
+                                <td>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Id</mat-label>
+                                        <input matInput placeholder=" {{'id' + i}}" 
+                                        formControlName="id" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'id' + (i+1)}}" 
+                                        aria-describedby="Enter User Id"
+                                        >
+                                      </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" class="form-field">
+                                        <mat-label>UserName</mat-label>
+                                        <input matInput placeholder=" {{'Username' + (i+1)}}" 
+                                        formControlName="username" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'username' + i}}"
+                                        aria-describedby="Enter User Name"
+                                        >
+                                      </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field appearance="outline" class="form-field">
+                                        <mat-label>Name</mat-label>
+                                        <input matInput placeholder=" {{'Name' + (i+1)}}" 
+                                        formControlName="name" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'name' + i}}"
+                                        aria-describedby="Enter User Name"
+                                        >
+                                      </mat-form-field> 
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" class="form-field">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput placeholder=" {{'Email'  + (i+1)}}" 
+                                        formControlName="email" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'email' + i}}"
+                                        aria-describedby="Enter User Email"
+                                        >
+                                      </mat-form-field>  
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field appearance="outline" class="form-field">
+                                        <mat-label>Phone</mat-label>
+                                        <input matInput placeholder=" {{'Phone'  + (i+1)}}" 
+                                        formControlName="phone" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'phone' + i}}"
+                                        aria-describedby="Enter User Phone Number"
+                                        >
+                                      </mat-form-field> 
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" class="form-field">
+                                        <mat-label>Company</mat-label>
+                                        <input matInput placeholder=" {{'Company' + (i+1)}}" 
+                                        formControlName="company" 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="{{'company' + i}}"
+                                        aria-describedby="Enter User Email"
+                                        >
+                                      </mat-form-field> 
+                                </td>
+                                <td>
+                                    <button class="minus-btn" type="button" mat-raised-button color="warn" (click)="removeUser(i)"> 
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </td>
+                            </tr>  
+                            <tr>
+                                <td>
+                                    <mat-error *ngIf="f.submitted && userForm.get('users').invalid">
+                                        <span class="text-danger">
+                                            Please Enter Complete Details.
+                                        </span>
+                                    </mat-error> 
+                                </td>
+                            </tr>
+                        </table>
+                    </div> 
+
+                </form>
+  
+            </div>
+        </div>  
+             
+          <div class="">
+            <button type="button" class="add-btn" mat-raised-button color="success" (click)="addUser()" [disabled]="len>0 && userForm.get('users').invalid">
+                <i class="fas fa-plus"></i>
+                Add
+            </button>
+
+            <button type="button" class="btn" mat-raised-button color="primary" (click)="onSave()" [disabled]="len<1 || userForm.get('users').invalid">Add User</button>
+         </div>               
+
+    </form>
+  </div>        
+   <div>
+       <button type="button" class="btn" mat-raised-button color="primary" class="saveChanges" (click)="postData()">
+          Save Changes
+       </button>
+       <div class="col-sm-8" *ngIf="serverFlag">
+           <h4>Server Message</h4>
+           <p>
+             {{ serversMessage }}
+           </p>
+       </div>
+   </div>
+ </div>     
+   
+   </div>

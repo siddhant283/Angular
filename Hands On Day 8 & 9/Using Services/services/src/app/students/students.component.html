@@ -1,0 +1,45 @@
+<div class="container">
+    <!-- <h3>Child: Student Component</h3> -->
+    <ng-content></ng-content>
+    <!-- <span #somecontent>Testing Data</span> -->
+    <div class="table-container">
+        <table class="col-sm-12">
+            <tr *ngIf="userDataStudents.length>0">
+                <th>Name</th>
+                <th>Joining Date</th>
+                <th>Fees</th>
+                <th>List of Subjects</th>  
+                <th>Percentage</th> 
+            </tr>
+    
+    
+            <tr *ngFor="let user of userDataStudents; let i = index">
+                <td>
+                    {{ user.userName }}
+                </td>
+                <td>
+                    {{ user.joiningDate }}
+                </td>
+                <td>
+                    {{ user.fees }}
+                </td>
+                <td>
+                    <span *ngFor="let subject of user.subjectSet; let j = index">
+                        <span #somecontent hidden>{{subject.marks}}</span>
+                        <span *ngIf="j<user.subjectSet.length-1">{{  subject.subjectName + '['+ subject.marks + ']' + ', '}}</span>
+                        <span *ngIf="j==user.subjectSet.length-1">{{ subject.subjectName + '['+ subject.marks + ']'}}</span>
+                    </span>
+                </td>
+                <td *ngIf="percentageFlag">
+                   <span> {{ percentage[i] | number:'1.0-2'}}% </span>
+                </td>
+            </tr>
+        </table>
+    
+    </div>
+</div>
+    
+      
+    
+
+

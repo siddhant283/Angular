@@ -1,0 +1,57 @@
+.container{
+    margin: 7% auto;
+    width: 80%;
+}
+
+.fetch-button{
+    margin: 20px;
+    margin-bottom: 100px;
+}
+
+.table {
+   margin-bottom: 20px;
+ }
+
+.mat-cell {
+    padding: 8px 8px 8px 0;
+  }
+
+td{
+    padding-right: 20px;
+}  
+
+.mat-table{
+    width: 100%;
+}
+
+.mat-paginator{
+    width: 100%;
+    margin-right: 0px;
+}
+
+.example-full-width{
+    margin: 10px 0px;
+}
+
+.mat-raised-button.mat-success{
+    color: #f0fff3;
+    background-color: #5cb85c;
+ }
+
+.add-btn{
+    margin: 10px 10px 10px 0px;
+}
+
+.delete-btn{
+    margin-right: 10px;
+}
+
+.minus-btn{
+    margin-bottom: 8px;
+}
+ 
+.saveChanges{
+    margin: 10px 0px;
+}
+
+

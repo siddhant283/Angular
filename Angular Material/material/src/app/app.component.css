@@ -1,0 +1,52 @@
+.sidenav-container {
+    height: 100%;
+  }
+  
+  .icon-size{
+    transform: scale(2);
+  }
+  
+  .sidenav {
+    width: 200px;
+  }
+  
+  .brand{
+    margin: 10px;
+  
+  }
+  
+  .nav-button{
+    margin: 10px;
+    width: 150px;
+  }
+  
+  .nav-link{
+    background-color: teal;
+  }
+  
+  .sideToolbar{
+    background-color: blueviolet;
+    color: white;
+  }
+  
+  .navbar{
+    justify-content: space-between;
+    position: sticky;
+    top: 0; /* Sets the sticky toolbar to be on top */
+    z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+  }
+  
+  
+  
+  .sidenav .mat-toolbar {
+    background: inherit;
+  }
+  
+  .mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  
+  
+  

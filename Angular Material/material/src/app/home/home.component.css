@@ -1,0 +1,73 @@
+.grid-container{
+  margin: 100px auto;
+  width: 80%;
+}
+
+.internalMatGrid{ width:100%;}
+
+.welcome{
+  margin: 100px auto;
+  width: 80%;
+  text-align: center;
+  font-size:calc(18px + 4vw);;
+  color: #1e212d;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5rem;
+  color: teal;
+}
+
+.example-card{
+  height: 100%;
+  width: 100%;
+}
+
+.card-content{
+  padding: 20px;
+}
+
+.card-content-internal{
+  padding: 10px;
+}
+
+.card-title{
+  position: absolute;
+  top:50px;
+  left: 34px;
+  font-size:calc(12px + 1.5vw);
+}
+
+.card-content{
+  position: absolute;
+  top:70px;
+}
+
+.card-title-internal{
+  position: absolute;
+  top:40px;
+  left: 14px;
+  font-size:calc(12px + 1.5vw);
+  margin-bottom: 10px;
+}
+
+.card-content-internal{
+  position: absolute;
+  top:70px;
+  left: 10px;
+}
+
+
+.img-aboutus{
+  width: 100%;
+  height: 100%;
+}
+
+.img-internal{
+  width: 100%;
+  height: 100%;
+}

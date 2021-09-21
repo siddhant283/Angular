@@ -1,0 +1,41 @@
+<div class="container">
+    <!-- <h3>Child: Subject Component</h3> -->
+    <ng-content></ng-content>
+    <h4 *ngIf="changingValue!=undefined">
+        {{ 'Value from the Observer: ' + changingValue }}
+    </h4>
+    <div class="table-container">
+        <table class="col-sm-12">
+            <tr *ngIf="userDataSubjects.length>0">
+                <th>Subject Name</th>
+                <th>List of Students</th>
+                
+    
+            </tr>
+    
+    
+            <tr *ngFor="let item of map | keyvalue; let i = index">
+                <p hidden> {{item | json}} </p>
+                <td>
+                    {{ item.key}}
+                </td>
+                <td>
+                    <p *ngFor="let student of item.value; let j = index">
+                        {{   'Name: '+ student.userName + ', ' 
+                           + 'Joining Date: '+ student.joiningDate + ', ' 
+                           + 'Fee: '+ student.fees + ', ' 
+                           + 'Marks: '+ student.marks + ', '
+                           + 'Percentage: ' + student.percentage + '%'  }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+    
+    </div>
+
+</div>
+    
+      
+    
+
+

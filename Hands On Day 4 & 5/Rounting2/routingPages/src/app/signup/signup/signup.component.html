@@ -1,0 +1,278 @@
+<div class="container">
+    <div>
+        <div class="signup-form">
+            <form name="form" (ngSubmit)="f.form.valid && addUser()" #f="ngForm"
+                novalidate>
+                <h2>Sign Up</h2>
+                <p *ngIf="!(successfulRegistration)">Please fill in this form to create an account!</p>
+                <p *ngIf="successfulRegistration">Registered Successfully!</p>
+
+                <hr>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input required #firstName="ngModel" type="text" class="form-control" name="firstName"
+                            [(ngModel)]="model.firstName" placeholder="First Name" required="required" minlength="4"
+                            pattern="^[ A-Za-z]*$">
+
+                    </div>
+
+                    <div *ngIf="(firstName.invalid && (firstName.dirty || firstName.touched))
+           || (firstName.invalid && f.submitted)">
+
+                        <span *ngIf="firstName.errors.required" class="text-danger">
+                            First Name is required.
+                        </span>
+                        <span *ngIf="firstName.errors.minlength" class="text-danger">
+                            First Name must be at least 4 characters long.
+                        </span>
+                        <span *ngIf="firstName.errors.pattern" class="text-danger">
+                            First Name can only contain Alphabets and Spaces.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input required #LastName="ngModel" type="text" class="form-control" name="LastName"
+                            [(ngModel)]="model.lastName" placeholder="Last Name" required="required" minlength="4"
+                            pattern="^[ A-Za-z]*$">
+                    </div>
+
+                    <div *ngIf="(LastName.invalid && (LastName.dirty || LastName.touched))
+ || (LastName.invalid && f.submitted)">
+
+                        <span *ngIf="LastName.errors.required" class="text-danger">
+                            Last Name is required.
+                        </span>
+                        <span *ngIf="LastName.errors.minlength" class="text-danger">
+                            Last Name must be at least 4 characters long.
+                        </span>
+                        <span *ngIf="LastName.errors.pattern" class="text-danger">
+                            Last Name can only contain Alphabets and Spaces.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input required #username="ngModel" type="text" class="form-control" name="username"
+                            [(ngModel)]="model.username" placeholder="Username" required="required" minlength="8"
+                            pattern="^[ A-Za-z0-9_@./#&+-]*$">
+                    </div>
+
+                    <div *ngIf="username.invalid && (username.dirty || username.touched)
+          || (username.invalid && f.submitted)">
+
+                        <span *ngIf="username.errors.required" class="text-danger">
+                            UserName is required.
+                        </span>
+                        <span *ngIf="username.errors.minlength" class="text-danger">
+                            UserName must be at least 8 characters long.
+                        </span>
+                        <span *ngIf="username.errors.pattern" class="text-danger">
+                            UserName can only contain AlphaNumeric Characters and Special Characters (*,_,@,.)
+                        </span>
+
+                    </div>
+
+                    <div *ngIf="alreadyRegisteredUsername">
+                       <span class="text-danger">
+                           This Username is already taken!
+                       </span>
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
+                        <input type="email" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel"
+                            placeholder="Email Address" required email>
+                    </div>
+
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)
+                          || (email.invalid && f.submitted)">
+
+
+                        <span *ngIf="email.errors.required else invalidEmail " class="text-danger">
+                            Email is required.
+                        </span>
+                        <ng-template #invalidEmail>
+                            <span class="text-danger">
+                                Please Enter Valid Email Id.
+                            </span>
+                        </ng-template>
+
+
+                    </div>
+
+                    
+                    <div *ngIf="alreadyRegisteredEmail">
+                        <span class="text-danger">
+                            This Email is already Registered!
+                        </span>
+                     </div>
+
+                </div>
+
+
+
+                
+                
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
+                        <input type="text" class="form-control" name="phone" [(ngModel)]="model.phone" #phone="ngModel"
+                            placeholder="Phone Number" required="required" minlength="10" pattern="[0-9]*"> 
+                    </div>
+
+                    <div *ngIf="phone.invalid && (phone.dirty || phone.touched)
+                          || (phone.invalid && f.submitted)">
+
+
+                        <span *ngIf="phone.errors.required" class="text-danger">
+                            Phone Number is required.
+                        </span>
+                        <span *ngIf="phone.errors.minlength" class="text-danger">
+                            10 digits required.
+                        </span>
+                        <span *ngIf="phone.errors.pattern" class="text-danger">
+                            Only digits are Valid.
+                        </span>
+                        
+
+
+                    </div>
+
+                    
+                    <div *ngIf="alreadyRegisteredPhone">
+                        <span class="text-danger">
+                            This Phone is already Registered!
+                        </span>
+                     </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
+                        <input type="text" class="form-control" name="project" [(ngModel)]="model.project" #project="ngModel"
+                            placeholder="Project Name" required="required" minlength="4"> 
+                    </div>
+
+                    <div *ngIf="project.invalid && (project.dirty || project.touched)
+                          || (project.invalid && f.submitted)">
+
+
+                        <span *ngIf="project.errors.required" class="text-danger">
+                            Project is required.
+                        </span>
+                        <span *ngIf="project.errors.minlength" class="text-danger">
+                            Minimum 4 characters are required.
+                        </span>
+        
+
+
+                    </div>
+
+    
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        <input type="password" class="form-control" name="password" #password="ngModel"
+                            [(ngModel)]="model.password" placeholder="Password" required minlength="8"
+                            pattern="^[ A-Za-z0-9_@./#&+-]*$">
+                    </div>
+
+
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)
+       ||(password.invalid && f.submitted)">
+
+
+                        <span *ngIf="password.errors.required" class="text-danger">
+                            Password is required.
+                        </span>
+                        <span *ngIf="password.errors.minlength" class="text-danger">
+                            Password must be at least 8 characters long.
+                        </span>
+                        <span *ngIf="password.errors.pattern" class="text-danger">
+                            Password can only contain Alphanumeric and Special Characters.
+                        </span>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-lock"></i>
+                            <i class="fa fa-check"></i>
+                        </span>
+                        <input type="password" #confirmPassword="ngModel" class="form-control" name="confirm_password"
+                            [(ngModel)]="model.confirmPassword" placeholder="Confirm Password" required="required">
+                    </div>
+
+                    <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)
+                     ||(confirmPassword.invalid && f.submitted)">
+
+
+                        <span *ngIf="confirmPassword.errors.required" class="text-danger">
+                            Please Confirm Your Password.
+                        </span>
+
+
+                        <span *ngIf="confirmPassword.errors.mustMatch" class="text-danger">
+                            Passwords don't Match.
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                </div>
+ 
+                <p>Already Registered !
+                    <a routerLink="/login">Login</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+</div>

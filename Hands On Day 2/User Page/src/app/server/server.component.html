@@ -1,0 +1,10 @@
+<div class="divServer">
+    <h1 [ngStyle] = " { color: headingColor() } "> {{ pageName }} </h1>
+    <h3 *ngIf="!(inputFlag)">Welcome {{userName}} !</h3>
+    <input *ngIf="inputFlag" type="text" class="form-control"  placeholder="Username" [(ngModel)]="userName" > 
+    <img *ngIf="!(inputFlag)" src= "{{ profileURL }}"  alt="Profile Picture"> 
+    <input *ngIf="inputFlag" type="url" class="form-control" placeholder="Profile Image URL" [(ngModel)]="profileURL" > 
+    <input *ngIf="inputFlag" type="number" class="form-control" placeholder="Age" (input)="onUpdateAge($event)"> 
+    <p> {{ voteDisplay }} </p>
+    <button class="btn" [ngClass]="{'btn-primary': inputFlag, 'formButton': (!inputFlag)}" (click)="onWelcomeUser()"> {{ buttonValue }} </button>
+  </div>

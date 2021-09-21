@@ -1,0 +1,137 @@
+<div class="container">
+
+<h1>
+  Parent Component
+</h1>
+  <div class="form-container">
+      <form [formGroup]="studentsForm" (ngSubmit)="studentsForm.valid && onSubmit()" #f="ngForm">
+          <div class="form-group">
+              <label class="col-sm-4" for="inputName"><b>Enter Your Name</b></label>
+              <div class="col-sm-8">
+                  <input formControlName="name" type="text" class="form-control" id="inputName"
+                      aria-describedby="name" placeholder="Student Name">
+              </div>
+
+              <div class="col-sm-4" *ngIf="(studentsForm.get('name').invalid && (studentsForm.get('name').touched || studentsForm.get('name').dirty))
+                         ||((studentsForm).get('name').invalid && f.submitted)">
+                  <span class="text-danger" *ngIf="studentsForm.get('name').errors.required">
+                      Your Name is required.
+                  </span>
+                  <span class="text-danger" *ngIf="studentsForm.get('name').errors.minlength">
+                      Minimum Name Length is 2.
+                  </span>
+                  <span class="text-danger" *ngIf="studentsForm.get('name').errors.pattern">
+                      Only Alphabets and Spaces are allowed.
+                  </span>
+              </div>
+
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-8" for="date"><b>Enter Your Date of Joining</b></label>
+            <div class="col-sm-8">
+                <input formControlName="date" type="date" class="form-control" id="date"
+                    aria-describedby="date" placeholder="Joining Date">
+            </div>
+
+            <div class="col-sm-4" *ngIf="(studentsForm.get('date').invalid && (studentsForm.get('date').touched || studentsForm.get('date').dirty))
+                       ||((studentsForm).get('date').invalid && f.submitted)">
+                <span class="text-danger" *ngIf="studentsForm.get('date').errors.required">
+                    Your Joining Date is required.
+                </span>
+            </div>
+
+      </div>
+        <div class="form-group">
+          <label class="col-sm-8" for="fees"><b>Enter Your Tution Fee</b></label>
+          <div class="col-sm-8">
+              <input formControlName="fees" type="text" class="form-control" id="fees"
+                  aria-describedby="fees" placeholder="Fees">
+          </div>
+
+          <div class="col-sm-6" *ngIf="(studentsForm.get('fees').invalid && (studentsForm.get('fees').touched || studentsForm.get('fees').dirty))
+                     ||((studentsForm).get('fees').invalid && f.submitted)">
+              <span class="text-danger" *ngIf="studentsForm.get('fees').errors.required">
+                  Your Fee Details are required.
+              </span>
+              <span class="text-danger" *ngIf="studentsForm.get('fees').errors.pattern">
+                Enter Your Fee in Digits.
+             </span>
+          </div>
+      </div>
+    
+
+    
+
+          <div formArrayName="subjects" *ngFor="let subject of studentsForm.get('subjects')['controls']; 
+          let i = index">
+
+              <form [formGroupName]=i>
+                  <div>
+                      <label class="col-sm-6" attr.for="{{'subjectName'+i}}"><b>Enter Your Subjects</b></label>
+                      <div class="form-row">
+
+                          <div class="col-sm-6">
+                              <input type="text" name="subjectName" id="{{'subjectName'+i}}" formControlName="subjectName"
+                                  class="form-control" placeholder=" {{'Subject'+ (i+1)}} ">
+                          </div>
+                          <div class="col-sm-2">
+                            <input type="text" name="marks" id="{{'Marks'+i}}" formControlName="marks"
+                                class="form-control" placeholder=" {{'Marks'+ (i+1)}} ">
+                        </div>
+                          <div class="col" *ngIf="checkLength()>1">
+                              <button class="btn btn-danger" type="button" (click)="removeSubject(i)">
+                                  <i class="fas fa-minus"></i>
+                              </button>
+                          </div>
+
+                      </div>
+
+
+                      <div class="col-sm-4" *ngIf="subject.controls.subjectName.invalid && (subject.controls.subjectName.touched || subject.controls.subjectName.dirty)
+                                             ||(subject.controls.subjectName.invalid && f.submitted) ">
+                          <span class="text-danger" *ngIf="subject.controls.subjectName.errors.required">
+                              Please Enter Your Skill.
+                          </span>
+                      </div>
+
+                      <div class="col-sm-4 marks" *ngIf="subject.controls.marks.invalid && (subject.controls.marks.touched || subject.controls.marks.dirty)
+                                             ||(subject.controls.marks.invalid && f.submitted) ">
+                          <span class="text-danger" *ngIf="subject.controls.marks.errors.required">
+                              Please Enter Your Marks.
+                          </span>
+                      </div>
+
+                  </div>
+
+              </form>
+
+
+          </div>
+
+          <div class="">
+              <button class="btn btn-success" (click)="addSubject()" [disabled]="studentsForm.get('subjects').invalid">
+                  <i class="fas fa-plus"></i>
+                  Add
+              </button>
+
+              <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+
+
+      </form>
+  </div>
+
+</div>
+
+  <app-students 
+  [userDataStudents]="userData"
+  (percentageEvent)="setPercentage($event)">
+  <h3>Child: Student Component</h3>
+  </app-students>
+
+  <app-subjects
+  [userDataSubjects]="userData"
+  [percentageSubjects]="percentage">
+  <h3>Child: Subject Component</h3>
+  </app-subjects>

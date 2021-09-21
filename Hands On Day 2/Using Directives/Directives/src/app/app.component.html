@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 subContainer">
+      <h1>Add Server using Directives</h1>
+      <input type="text" class="form-control" (input)="onUpdateServer($event)">
+      <p> {{ servername }} </p>
+      <button class="btn btn-primary" [disabled]="(!serverStatus)" (click)= "addServer()">Add Server</button>
+      <div *ngFor="let server of servers; let i = index"
+      [ngStyle]="{backgroundColor : i >=4 ? 'orange' : 'red'}"
+      [ngClass]="{'white-text': i >=4}">
+         <p>Server id {{ i +1 }} with name {{ server }}, changes color at server id 5</p> 
+      </div>
+    </div>
+  </div>
+</div>
+

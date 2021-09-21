@@ -1,0 +1,228 @@
+<div class="container">
+
+    <h3>
+        Http Component
+    </h3>
+      <div class="form-container">
+          <form [formGroup]="studentsForm" (ngSubmit)="studentsForm.valid && onSubmit()" #f="ngForm">
+              <label class="col-sm-4" for="URL"><b>Enter URL</b></label>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  
+                    <div class="col-sm-12">
+                        <input formControlName="URL" type="text" class="form-control" id="URL"
+                            aria-describedby="URL" placeholder="URL">
+                    </div>
+      
+                    <div class="col-sm-4" *ngIf="(studentsForm.get('URL').invalid && (studentsForm.get('URL').touched || studentsForm.get('URL').dirty))
+                               ||((studentsForm).get('URL').invalid && f.submitted)">
+                        <span class="text-danger" *ngIf="studentsForm.get('URL').errors.required">
+                            Please Enter URL to fetch Data.
+                        </span>
+                        <span class="text-danger" *ngIf="studentsForm.get('URL').errors.minlength">
+                            Minimum URL Length is 2.
+                        </span>
+                        <span class="text-danger" *ngIf="studentsForm.get('URL').errors.pattern">
+                            Please Enter a Valid URL.
+                        </span>
+                    </div>
+                </div>
+                <div class="">
+                    <button type="submit" class="btn btn-primary">Fetch Data</button>
+                </div>
+              </div>
+    
+          </form>
+      </div>
+
+<div class="table-container">
+        <table class="col-sm-12">
+            <tr *ngIf="userInfo.length>0">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>  
+                <th>Company</th> 
+            </tr>
+    
+    
+            <tr *ngFor="let user of userInfo; let i = index">
+                <td>
+                    {{ user.id }}
+                </td>
+                <td>
+                    {{ user.name }}
+                </td>
+                <td>
+                    {{ user.username }}
+                </td>
+                <td>
+                   {{ user.email }}
+                </td>
+                <td>
+                  {{ user.company.name }}
+                </td>
+                <td>
+                    <button class="delete btn btn-danger" type="button" (click)="deleteUser(i)"  [disabled]="deleteDisabled(i)">
+                        Delete 
+                    </button>
+                </td>
+              <td>
+                <button type="button" class="btn btn-primary" (click)="updateUser(i)">
+                    Update
+                </button>
+              </td>
+            </tr>
+        </table> 
+    </div>
+ 
+
+    <div>
+        <div class="form-container">
+    <form [formGroup]="userForm" (ngSubmit)="userForm.valid" #f="ngForm">
+
+        <div *ngIf="updateFlag">
+           
+  
+                <form formGroupName="update">
+                    <div>
+                        <label class="col-sm-6" attr.for="{{'userName'}}"><b>Update User</b></label>
+                        <div class="form-row">
+  
+                            <div class="col-sm-1">
+                                <input type="text" name="id" id="{{'id'}}" formControlName="id"
+                                    class="form-control" placeholder=" {{'id'}}" [(ngModel)]="updateUserData.id" >
+                            </div>
+
+                            <div class="col-sm-2">
+                              <input type="text" name="name" id="{{'name'}}" formControlName="name"
+                                  class="form-control" placeholder=" {{'name'}} " [(ngModel)]="updateUserData.name">
+                            </div>
+
+                            <div class="col-sm-2">
+                              <input type="text" name="username" id="{{'username'}}" formControlName="username"
+                                  class="form-control" placeholder=" {{'username'}} " [(ngModel)]="updateUserData.username">
+                            </div>
+
+                            <div class="col-sm-2">
+                              <input type="text" name="email" id="{{'email'}}" formControlName="email"
+                                  class="form-control" placeholder=" {{'email'+ (i+1)}} " [(ngModel)]="updateUserData.email">
+                            </div>
+
+                            <div class="col-sm-2">
+                              <input type="text" name="company" id="{{'company'}}" formControlName="company"
+                                  class="form-control" placeholder=" {{'company'}} " [(ngModel)]="updateUserData.company">
+                            </div>
+
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-primary" (click)="updateChanges()" [disabled]="userForm.get('update').invalid"> 
+                                    Update User
+                                </button>
+                            </div>
+  
+                        </div>
+  
+  
+                        <div class="col-sm-4" *ngIf="f.submitted && userForm.get('update').invalid">                 
+                            <span class="text-danger">
+                                Please Enter Complete Details.
+                            </span>
+                        </div>
+
+                    </div> 
+
+                </form>          
+        </div>  
+           
+        <label class="col-sm-6" attr.for="{{'userName'}}"><b>Add User</b></label>        
+        <div *ngIf="checkLength()>0">
+            <div formArrayName="users" *ngFor="let user of userForm.get('users')['controls']; 
+            let i = index">
+  
+                <form [formGroupName]=i>
+                    <div>
+                        
+                        <div class="form-row">
+  
+                            <div class="col-sm-1">
+                                <input type="text" name="id" id="{{'id'+i}}" formControlName="id"
+                                    class="form-control" placeholder=" {{'id'+ (i+1)}} ">
+                            </div>
+
+                            <div class="col-sm-2">
+                              <input type="text" name="name" id="{{'name'+i}}" formControlName="name"
+                                  class="form-control" placeholder=" {{'name'+ (i+1)}} ">
+                            </div>
+
+                            <div class="col-sm-2">
+                              <input type="text" name="username" id="{{'username'+i}}" formControlName="username"
+                                  class="form-control" placeholder=" {{'username'+ (i+1)}} ">
+                            </div>
+
+                            <div class="col-sm-3">
+                              <input type="text" name="email" id="{{'email'+i}}" formControlName="email"
+                                  class="form-control" placeholder=" {{'email'+ (i+1)}} ">
+                            </div>
+
+                            <div class="col-sm-3">
+                              <input type="text" name="company" id="{{'company'+i}}" formControlName="company"
+                                  class="form-control" placeholder=" {{'company'+ (i+1)}} ">
+                            </div>
+
+                            <div class="col">
+                                <button class="btn btn-danger" type="button" (click)="removeUser(i)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+  
+                        </div>
+  
+  
+                        <div class="col-sm-4" *ngIf="f.submitted && userForm.get('users').invalid">                 
+                            <span class="text-danger">
+                                Please Enter Complete Details.
+                            </span>
+                        </div>
+
+                    </div> 
+
+                </form>
+  
+            </div>
+        </div>  
+           
+  
+         
+           
+          <div class="">
+            <button class="btn btn-success" (click)="addUser()" [disabled]="len>0 && userForm.get('users').invalid">
+                <i class="fas fa-plus"></i>
+                Add
+            </button>
+
+            <button type="button" class="btn btn-primary" (click)="onSave()" [disabled]="len<1 || userForm.get('users').invalid">Add User</button>
+         </div>               
+
+    </form>
+  </div>        
+   <div>
+       <button type="button" class="btn btn-primary saveChanges" (click)="postData()">
+          Save Changes
+       </button>
+       <div class="col-sm-8" *ngIf="serverFlag">
+           <h4>Server Message</h4>
+           <p>
+             {{ serversMessage }}
+           </p>
+       </div>
+   </div>
+ </div>
+
+</div>  
+    
+
+    
+    
+     
+      

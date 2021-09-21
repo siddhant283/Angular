@@ -1,0 +1,22 @@
+<h3>
+    <button (click)="goPrevious()" class="btn btn-primary">Previous</button>
+    You selected department with id = {{ departmentId }}
+    <button (click)="goNext()" class="btn btn-primary">Next</button>
+   
+</h3>
+
+<p>
+    <button (click)="showOverview()">Overview</button>
+</p>
+
+<p>
+    <button (click)="showContact()">Contact</button>
+</p>
+
+<router-outlet></router-outlet>
+
+<div>
+    <button class="btn btn-primary" (click)="gotoDepartments()">
+       Back
+    </button>
+</div>

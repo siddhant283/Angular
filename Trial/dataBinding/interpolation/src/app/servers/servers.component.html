@@ -1,0 +1,15 @@
+<label for=""></label>
+<!-- <input type="text" class="form-control" (input)="onUpdateServerName($event)"> -->
+<input type="text" class="form-control" [(ngModel)]="servername"> 
+<p> {{ servername }} </p>
+<button class="btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()">Add Server</button>
+
+<!-- <p>{{ serverCreationStatus }}</p> -->
+<p *ngIf="serverCreated; else noServer">Server was created , name of the server is {{ servername }} </p>
+<ng-template #noServer>
+    <p>No Server was Created!</p>
+</ng-template>
+<p 
+[ngStyle] = " { backgroundColor: getColor() } " 
+[ngClass]="{ online: serverStatus==='online' }"
+*ngFor="let server of servers"> Server with id {{ server }} is {{ getServerStatus() }} </p>

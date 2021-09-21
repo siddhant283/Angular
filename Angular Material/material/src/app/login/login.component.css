@@ -1,0 +1,22 @@
+.container{
+    margin: 7% auto;
+    width: 40%;
+    border: royalblue 3px solid;
+}
+
+.form-container{
+    margin: 7% 14%;
+    width: 80%;
+}
+
+.form-field{
+    width: 60%;
+}
+
+.register{
+    margin-left: 6%;
+}
+
+a{
+    color: royalblue;
+}

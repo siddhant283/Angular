@@ -1,0 +1,29 @@
+.container{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+.reg-header{
+    padding: 30px;
+}
+
+.stepper-container{
+    margin: 1px;
+}
+
+.form-field{
+    margin-right: 20px;
+}
+
+.radio{
+    margin-right: 10px;
+}
+
+.example-chip-list {
+    width: 60%;
+  }
+
+.step-btn{
+    margin-right: 10px;
+}
